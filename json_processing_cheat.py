@@ -10,19 +10,34 @@ with open('results.json', 'w') as outfile:
     json.dump(data, outfile)
 
 # ========================================== #
-
 # READING FROM JSON FILE
 import json
 with open('results.json') as json_file:
     data = json.load(json_file)
 
-print(data)
-
+# ========================================== #
+# WRITING TO JSON FILE WITH GZIP
+import gzip
+import json
+data = {
+    'name': 'Akhi',
+    'age': '23',
+    'country': 'Indonesia'
+}
+with gzip.open('results.json.gz', 'wt', encoding='utf-8') as outfile:
+    json.dump(data, outfile, separators=(",", ":"))
 
 # ========================================== #
+# READING FROM JSON FILE WITH GZIP
+import gzip
+import json
+with gzip.open('results.json.gz', "rt") as f:
+    data = json.load(f)
 
+# ========================================== #
 # READING FROM FOLDER
 import glob
+import re
 files = sorted(glob.glob('./folder_name/*.json'),key=lambda x:float(re.findall("(\d+)",x)[0]))
 all_datas = []
 for file in files:
@@ -31,9 +46,7 @@ for file in files:
         datas = json.load(json_file)
     all_datas.append(datas)
 
-
 # ========================================== #
-
 # READING FROM HTML SCRIPT
 import json
 from bs4 import BeautifulSoup
